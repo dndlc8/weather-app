@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from "axios";
 import './Weather.css';
 
-export default function Weather () {
+export default function Weather (props) {
   const [forecast, setForecast]= useState ({ready: false});
 
   function handleResponse(response) {
@@ -30,7 +30,7 @@ export default function Weather () {
         className="formControl" />
         <input type ="submit" value="Search" className="btn btn-dark"/>
       </form>
-      <h1 className="cityHeader">New York
+      <h1 className="cityHeader">{props.defaultCity}
       </h1>
       <h3 className="date">{forecast.date}</h3>
       <div className="currentContainer row">
@@ -86,12 +86,11 @@ export default function Weather () {
 
   );
   } else {
-      let city= "New York"
   let units = "imperial";
   let apiKey = "1b9a19801a7a96280358cc2498e9820b";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(handleResponse);
 
-  return "Loading..."
+  return "Check Back Later"
   }
 }
