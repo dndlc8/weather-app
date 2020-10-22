@@ -52,12 +52,6 @@ table {
   margin: 10px 20px 2px 10px;
 }
 
-.weather .icon {
-  max-height: 236px;
-  max-width: 266px;
-  margin: 0 0 0 80px;
-}
-
 .weather .currentContainer {
   vertical-align: center;
   margin-left: 60px;
