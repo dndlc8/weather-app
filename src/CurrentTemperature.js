@@ -15,9 +15,9 @@ export default function CurrentTemperature(props) {
 
   if (unit === "farenheit") {
   return (
-    <div className="currentTemperature">
+    <div className="currentTemperature col">
       <div className="current"><span className="currentTemp">{props.farenheit}</span> 
-        <span className="unit">°F | <a href="/" onClick={convertToCelsius}>°C</a></span>
+        <span className="unit">{" "} °F | <a href="/" onClick={convertToCelsius}>°C</a></span>
       </div>
     </div>
   );
