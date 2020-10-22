@@ -16,6 +16,8 @@ export default function HourlyForecast(props) {
 
   if (loaded && props.city === hourForecast.city.name) {
     return (
+      <div>
+      <h4 className="hourlyHeader">Three Hour Forecast</h4>
       <div className="weatherForecast row">
         <HourlyForecastPreview data={hourForecast.list[0]} />
         <HourlyForecastPreview data={hourForecast.list[1]} />
@@ -23,6 +25,7 @@ export default function HourlyForecast(props) {
         <HourlyForecastPreview data={hourForecast.list[3]} />
         <HourlyForecastPreview data={hourForecast.list[4]} />
         <HourlyForecastPreview data={hourForecast.list[5]} />
+      </div>
       </div>
     );
   } else {
