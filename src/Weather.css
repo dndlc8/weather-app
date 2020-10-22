@@ -100,7 +100,8 @@ table {
 }
 
 .weather .windMeasure {
-  font-size: 20px;
+  font-size: 21px;
+  font-weight: bold;
 }
 .weather .windCater {
   padding-right: 10px;

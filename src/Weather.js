@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
+import FormattedDate from "./FormattedDate";
 import axios from "axios";
 import './Weather.css';
+
 
 export default function Weather (props) {
   const [forecast, setForecast]= useState ({ready: false});
 
   function handleResponse(response) {
-    console.log(response.data);
     setForecast({
       ready: true,
-      date: "Friday 08:00",
+      date: new Date(response.data.dt * 1000),
       temperature: Math.round(response.data.main.temp),
       description: response.data.weather[0].description,
       iconUrl: "//ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
@@ -32,7 +33,7 @@ export default function Weather (props) {
       </form>
       <h1 className="cityHeader">{props.defaultCity}
       </h1>
-      <h3 className="date">{forecast.date}</h3>
+      <h3 className="date"><FormattedDate date={forecast.date} /></h3>
       <div className="currentContainer row">
        <img className="icon col-5" src={forecast.iconUrl} alt={forecast.description}/>
       <div className="current"><span className="currentTemp">{forecast.temperature}</span> 
@@ -74,7 +75,7 @@ export default function Weather (props) {
         </tr>
         <tr>
           <td className="info windInfo">
-          <span className="windNumber">{forecast.wind}</span><span className="windMeasure">mph</span>
+          <span className="windNumber">{forecast.wind}{" "}</span><span className="windMeasure">mph</span>
           </td>
           <td className="info humidityInfo">
           <span className="humidNumber">{forecast.humidity}</span>%
