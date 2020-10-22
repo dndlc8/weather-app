@@ -1,7 +1,28 @@
-import React from 'react';
+import React, {useState} from 'react';
+import axios from "axios";
 import './Weather.css';
 
 export default function Weather () {
+  const [forecast, setForecast]= useState ({ready: false});
+
+  function handleResponse(response) {
+    console.log(response.data);
+    setForecast({
+      ready: true,
+      date: "Friday 08:00",
+      temperature: Math.round(response.data.main.temp),
+      description: response.data.weather[0].description,
+      iconUrl: "//ssl.gstatic.com/onebox/weather/64/partly_cloudy.png",
+      feels: Math.round(response.data.main.feels_like),
+      hiTemp: Math.round(response.data.main.temp_max),
+      lowTemp: Math.round(response.data.main.temp_min),
+      wind: Math.round(response.data.wind.speed),
+      humidity: response.data.main.humidity
+    })
+  }
+
+
+  if (forecast.ready){
   return (
     <div className="weather">
       <form className="search">
@@ -9,50 +30,54 @@ export default function Weather () {
         className="formControl" />
         <input type ="submit" value="Search" className="btn btn-dark"/>
       </form>
-      <div className="row">
-      <h1 className="cityHeader">New York, NY
+      <h1 className="cityHeader">New York
       </h1>
-      <img className="icon col-2" scr="//ssl.gstatic.com/onebox/weather/64/partly_cloudy.png" alt="Weather Icon"/>
+      <h3 className="date">{forecast.date}</h3>
+      <div className="currentContainer row">
+       <img className="icon col-5" src={forecast.iconUrl} alt={forecast.description}/>
+      <div className="current"><span className="currentTemp">{forecast.temperature}</span> 
+        <span>°F</span><br /><span className="weatherDescription text-capitalize">{forecast.description} </span>
       </div>
-      <div className="currentTemp"><span className="currentTempNum">57</span> 
-        <span>°F</span>
-      </div>
-      <div className="weatherDescription">Mostly Cloudy
-      </div>
+     
+       </div>
       
       <table className="weatherInfo">
         <tr>
-          <td className="tableCategory hi">
+          <td className="tableCategory feelsCater">
+          Feels Like
+          </td>
+          <td className="tableCategory hiCater">
           Hi
           </td>
-          <td className="tableCategory low">
+          <td className="tableCategory lowCater">
           Low
           </td>
-          <td className="tableCategory wind">
-          Wind
+        </tr>
+        <tr>
+          <td className= "info feelsLike">
+          <span className="feelNumber">{forecast.feels}</span>°F
           </td>
-          <td className="tableCategory humid">
-          Humidity
+          <td className= "info tempHiInfo">
+          <span className="hiNumber">{forecast.hiTemp}</span>°F
           </td>
-          <td className="tableCategory precip">
-          Precipitation
+          <td className="info tempLowInfo">
+          <span className="lowNumber">{forecast.lowTemp}</span>°F
           </td>
         </tr>
-        <tr className="row">
-          <td className= "info tempHi">
-          <span className="hiNumber">81</span>°F
+        <tr>
+          <td className="tableCategory windCater">
+          Wind
           </td>
-          <td className="info tempLow">
-          <span className="lowNumber">52</span>°F
+          <td className="tableCategory humidCater">
+          Humidity
           </td>
-          <td className="info wind">
-          <span className="windNumber">7</span>mph
+        </tr>
+        <tr>
+          <td className="info windInfo">
+          <span className="windNumber">{forecast.wind}</span><span className="windMeasure">mph</span>
           </td>
-          <td className="info humidity">
-          <span className="humidNumber">77</span>%
-          </td>
-          <td className= "info precipitation">
-          <span className="precipNumber">16</span>%
+          <td className="info humidityInfo">
+          <span className="humidNumber">{forecast.humidity}</span>%
           </td>
         </tr>
       </table>
@@ -60,4 +85,13 @@ export default function Weather () {
     </div>
 
   );
+  } else {
+      let city= "New York"
+  let units = "imperial";
+  let apiKey = "1b9a19801a7a96280358cc2498e9820b";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(handleResponse);
+
+  return "Loading..."
+  }
 }
