@@ -28,8 +28,8 @@ export default function DescriptionIcon(props) {
   <ReactAnimatedWeather
   icon= {codeMapping[props.code]}
   color= "black"
-  size= {140}
-  animate= {false}
+  size= {180}
+  animate= {true}
 />
 </div>
 );

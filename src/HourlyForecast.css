@@ -1,12 +1,12 @@
 .weatherForecast {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: bold;
   text-align: center;
   margin: 20px 0 20px;
 }
 .weatherForecast canvas {
   display: block;
-  width: 20px;
+  width: 40px;
   margin: 0 auto;
 }
 
